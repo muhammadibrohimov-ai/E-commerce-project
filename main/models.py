@@ -66,6 +66,7 @@ class Category(models.Model):
     title = models.CharField(max_length=200)
     desc = models.TextField()
     image = models.FileField(upload_to='images/sup_category')
+    is_active = models.BooleanField(default=True)
     
     def __str__(self):
         return self.name
@@ -140,6 +141,7 @@ class ProductImage(models.Model):
 class Country(models.Model):
     name = models.CharField(max_length=150)
     flag = models.FileField(upload_to='images/country')
+    is_active = models.BooleanField(default=True)
     
     def __str__(self):
         return self.name
