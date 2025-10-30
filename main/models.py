@@ -73,8 +73,8 @@ class Category(models.Model):
     
     class Meta:
         db_table = 'super_category'
-        verbose_name = 'SuperCategory'
-        verbose_name_plural = 'SuperCategroies'
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categroies'
         
         
 class SubCategory(models.Model):

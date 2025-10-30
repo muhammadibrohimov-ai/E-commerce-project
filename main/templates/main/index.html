@@ -17,21 +17,18 @@
 		<nav class="nav-home-aside">
 			<h6 class="title-category">MY MARKETS <i class="d-md-none icon fa fa-chevron-down"></i></h6>
 			<ul class="menu-category">
-				<li><a href="#">Fashion and clothes</a></li>
-				<li><a href="#">Automobile and motors</a></li>
-				<li><a href="#">Gardening and agriculture</a></li>
-				<li><a href="#">Electronics and tech</a></li>
-				<li><a href="#">Packaginf and printing</a></li>
-				<li><a href="#">Home and kitchen</a></li>
-				<li><a href="#">Digital goods</a></li>
+                {% for category in categories|slice:":7" %}
+				    <li><a href="#">{{ category.name }}</a></li>
+                {% endfor %}
+                {% if categories|length > 7 %}
 				<li class="has-submenu"><a href="#">More items</a>
 					<ul class="submenu">
-						<li><a href="#">Submenu name</a></li>
-						<li><a href="#">Great submenu</a></li>
-						<li><a href="#">Another menu</a></li>
-						<li><a href="#">Some others</a></li>
+                        {% for category in categories|slice:"7:" %}
+						    <li><a href="#">{{ category.name }}</a></li>
+                        {% endfor %}
 					</ul>
 				</li>
+                {% endif %}
 			</ul>
 		</nav>
 	</aside> <!-- col.// -->
@@ -70,30 +67,16 @@
 	<div class="col-md d-none d-lg-block flex-grow-1">
 		<aside class="special-home-right">
 			<h6 class="bg-blue text-center text-white mb-0 p-2">Popular category</h6>
-			
-			<div class="card-banner border-bottom">
-			  <div class="py-3" style="width:80%">
-			    <h6 class="card-title">Men clothing</h6>
-			    <a href="#" class="btn btn-secondary btn-sm"> Source now </a>
-			  </div> 
-			  <img src="images/items/1.jpg" height="80" class="img-bg">
-			</div>
+			{% for category in categories|slice:":3" %}
+                <div class="card-banner border-bottom">
+                  <div class="py-3" style="width:80%">
+                    <h6 class="card-title">{{ category.name }}</h6>
+                    <a href="#" class="btn btn-secondary btn-sm"> Source now </a>
+                  </div>
+                  <img src="{{ category.image.url }}" height="80" class="img-bg">
+                </div>
+            {% endfor %}
 
-			<div class="card-banner border-bottom">
-			  <div class="py-3" style="width:80%">
-			    <h6 class="card-title">Winter clothing </h6>
-			    <a href="#" class="btn btn-secondary btn-sm"> Source now </a>
-			  </div> 
-			  <img src="images/items/2.jpg" height="80" class="img-bg">
-			</div>
-
-			<div class="card-banner border-bottom">
-			  <div class="py-3" style="width:80%">
-			    <h6 class="card-title">Home inventory</h6>
-			    <a href="#" class="btn btn-secondary btn-sm"> Source now </a>
-			  </div> 
-			  <img src="images/items/6.jpg" height="80" class="img-bg">
-			</div>
 
 		</aside>
 	</div> <!-- col.// -->
@@ -195,10 +178,10 @@
 	<div class="col-md-3">
 	
 	<div class="home-category-banner bg-light-orange">
-		<h5 class="title">Best trending clothes only for summer</h5>
-		<p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+		<h5 class="title">{{ clothe.name }}</h5>
+		<p>{{ clothe.desc|slice:":20" }}</p>
 		<a href="#" class="btn btn-outline-primary rounded-pill">Source now</a>
-		<img src="images/items/2.jpg" class="img-bg">
+		<img src="{{ clothe.image.url }}" class="img-bg">
 	</div>
 
 	</div> <!-- col.// -->
@@ -295,10 +278,10 @@
 	<div class="col-md-3">
 	
 	<div class="home-category-banner bg-light-orange">
-		<h5 class="title">Machinery items for manufacturers</h5>
-		<p>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+		<h5 class="title">{{ electronic.name }}</h5>
+		<p>{{ electronic.desc|slice:":20" }}</p>
 		<a href="#" class="btn btn-outline-primary rounded-pill">Source now</a>
-		<img src="images/items/14.jpg" class="img-bg">
+		<img src="{{ electronic.image.url }}" class="img-bg">
 	</div>
 
 	</div> <!-- col.// -->
@@ -578,42 +561,20 @@
 </header>
 
 <div class="row">
-	<div class="col-md-3 col-sm-6">
-		<article class="card card-post">
-		  <img src="{% static 'images/posts/1.jpg' %}" class="card-img-top">
-		  <div class="card-body">
-		    <h6 class="title">Trade Assurance</h6>
-		    <p class="small text-uppercase text-muted">Order protection</p>
-		  </div>
-		</article> <!-- card.// -->
-	</div> <!-- col.// -->
-	<div class="col-md-3 col-sm-6">
-		<article class="card card-post">
-		  <img src="{% static 'images/posts/2.jpg' %}" class="card-img-top">
-		  <div class="card-body">
-		    <h6 class="title">Pay anytime</h6>
-		    <p class="small text-uppercase text-muted">Finance solution</p>
-		  </div>
-		</article> <!-- card.// -->
-	</div> <!-- col.// -->
-	<div class="col-md-3 col-sm-6">
-		<article class="card card-post">
-		  <img src="{% static 'images/posts/3.jpg' %}" class="card-img-top">
-		  <div class="card-body">
-		    <h6 class="title">Inspection solution</h6>
-		    <p class="small text-uppercase text-muted">Easy Inspection</p>
-		  </div>
-		</article> <!-- card.// -->
-	</div> <!-- col.// -->
-	<div class="col-md-3 col-sm-6">
-		<article class="card card-post">
-		  <img src="{% static 'images/posts/4.jpg' %}" class="card-img-top">
-		  <div class="card-body">
-		    <h6 class="title">Ocean and Air Shipping</h6>
-		    <p class="small text-uppercase text-muted">Logistic services</p>
-		  </div>
-		</article> <!-- card.// -->
-	</div> <!-- col.// -->
+    {% for service in services|slice:":4" %}
+        <div class="col-md-3 col-sm-6">
+            <article class="card card-post">
+              <img src="{{ service.image.url }}" class="card-img-top">
+              <div class="card-body">
+                <h6 class="title">{{ service.name }}</h6>
+                <p class="small text-uppercase text-muted">{{ service.desc|slice:":15" }}</p>
+              </div>
+            </article> <!-- card.// -->
+        </div> <!-- col.// -->
+        {% empty %}
+        No Services available
+    {% endfor %}
+
 </div> <!-- row.// -->
 
 </section>
@@ -627,15 +588,16 @@
 </header>
 
 <ul class="row mt-4">
-	<li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="images/icons/flags/CN.png"> <span>China</span> </a></li>
-	<li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="images/icons/flags/DE.png"> <span>Germany</span> </a></li>
-	<li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="images/icons/flags/AU.png"> <span>Australia</span> </a></li>
-	<li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="images/icons/flags/RU.png"> <span>Russia</span> </a></li>
-	<li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="images/icons/flags/IN.png"> <span>India</span> </a></li>
-	<li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="images/icons/flags/GB.png"> <span>England</span> </a></li>
-	<li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="images/icons/flags/TR.png"> <span>Turkey</span> </a></li>
-	<li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="images/icons/flags/UZ.png"> <span>Uzbekistan</span> </a></li>
-	<li class="col-md col-6"><a href="#" class="icontext"> <i class="mr-3 fa fa-ellipsis-h"></i> <span>More regions</span> </a></li>
+    {% for country in countries|slice:":8" %}
+	    <li class="col-md col-6"><a href="#" class="icontext"> <img class="icon-flag-sm" src="{{ country.flag.url }}"> <span>{{ country.name }}</span> </a></li>
+        {% empty %}
+        No regions available
+	{% endfor %}
+    {% if countries|length > 8 %}
+        {% for country in countries|slice:"8:" %}
+	        <li class="col-md col-6"><a href="#" class="icontext"> <i class="mr-3 fa fa-ellipsis-h"></i> <span>More regions</span> </a></li>
+        {% endfor %}
+    {% endif %}
 </ul>
 </section>
 <!-- =============== SECTION REGION .//END =============== -->
