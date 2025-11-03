@@ -161,6 +161,7 @@
                     <ul class="row no-gutters bordered-cols">
                         {% for product in products %}
                             {% if product.sub_category.category == category %}
+                                <a href="{% url 'detail' product.id %}">
                                 <li class="col-6 col-lg-3 col-md-4">
                                     <a href="#" class="item">
                                         <div class="card-body">
@@ -170,6 +171,7 @@
                                         </div>
                                     </a>
                                 </li>
+                                </a>
                             {% endif %}
                         {% empty %}
                             <li>No products available for this category.</li>
@@ -206,6 +208,7 @@
                     <ul class="row no-gutters bordered-cols">
                         {% for product in products %}
                             {% if product.sub_category.category == category %}
+                                <a href="{% url 'detail' product.id %}">
                                 <li class="col-6 col-lg-3 col-md-4">
                                     <a href="#" class="item">
                                         <div class="card-body">
@@ -215,6 +218,7 @@
                                         </div>
                                     </a>
                                 </li>
+                                </a>
                             {% endif %}
                         {% empty %}
                             <li>No products available for this category.</li>
@@ -308,10 +312,10 @@
 <div class="row row-sm">
 
 	{% for product in recomended %}
-
+        <a href="{% url 'detail' product.id %}">
         <div class="col-xl-2 col-lg-3 col-md-4 col-6">
             <div class="card card-sm card-product-grid">
-                <a href="#" class="img-wrap"> <img src="{{ product.main_image.url }}"> </a>
+                <a href="{% url 'detail' product.id %}" class="img-wrap"> <img src="{{ product.main_image.url }}"> </a>
                 <figcaption class="info-wrap">
                     <a href="#" class="title">{{ product.title }}</a>
                     {% if product.discounted_price != product.price %}
@@ -324,7 +328,7 @@
                 </figcaption>
             </div>
 	    </div> <!-- col.// -->
-
+        </a>
     {% empty %}
         <p>There is no recomended products</p>
     {% endfor %}

@@ -182,8 +182,8 @@
 </header><!-- sect-heading -->
 
 {% for product in products %}
-
-    <article class="card card-product-list">
+    <a href="{% url 'detail' product.id %}">
+        <article class="card card-product-list">
 	<div class="row no-gutters">
 		<aside class="col-md-3">
 			<a href="{{ product.id }}" class="img-wrap">
@@ -253,7 +253,7 @@
 		</aside> <!-- col.// -->
 	</div> <!-- row.// -->
 </article> <!-- card-product .// -->
-
+    </a>
 {% endfor %}
 
 <nav class="mb-4" aria-label="Page navigation sample">
