@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View 
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from .models import (
     Product,Category, SubCategory,
     Country, Service, ProductImage
@@ -36,6 +36,7 @@ class CategoryPageView(ListView):
 class ListingGridPageView(ListView):
     template_name = 'main/listing-grid.html'
     context_object_name = 'products'
+    paginate_by = 12
 
     def get_queryset(self):
         sub_id = self.kwargs.get('pk')
@@ -48,5 +49,26 @@ class ListingGridPageView(ListView):
 
     
     
-class ListingLargePageView(TemplateView):
+class ListingLargePageView(ListView):
     template_name = 'main/listing-large.html'
+    context_object_name = 'products'
+    paginate_by = 6
+
+    def get_queryset(self):
+        sub_id = self.kwargs.get('pk')
+        return Product.objects.filter(sub_category__id=sub_id)
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sub_id'] = self.kwargs.get('pk')
+        return data
+
+class DetailProductView(DetailView):
+    model = Product
+    template_name = 'main/detail-product.html'
+    context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['images'] = ProductImage.objects.filter(product__id = self.kwargs['pk'])
+        return data

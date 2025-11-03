@@ -96,9 +96,9 @@
 				<option>Cheapest</option>
 			</select>
 			<div class="btn-group">
-				<a href="page-listing-grid.html" class="btn btn-light active" data-toggle="tooltip" title="List view"> 
+				<a href="{% url 'sub' sub_id  %}" class="btn btn-light active" data-toggle="tooltip" title="List view">
 					<i class="fa fa-bars"></i></a>
-				<a href="page-listing-large.html" class="btn btn-light" data-toggle="tooltip" title="Grid view"> 
+				<a href="{% url 'sub_large' sub_id  %}" class="btn btn-light" data-toggle="tooltip" title="Grid view">
 					<i class="fa fa-th"></i></a>
 			</div>
 		</div>
@@ -108,7 +108,8 @@
 
     {% for product in products %}
 
-	<div class="col-md-3">
+        <a href="{% url 'detail' product.id %}">
+        <div class="col-md-3">
 		<figure class="card card-product-grid">
 			<div class="img-wrap"> 
 				{% if product.is_new %}
@@ -135,9 +136,9 @@
 					
 					<p class="mb-3">
 						<span class="tag"> <i class="fa fa-check"></i> Verified</span> 
-						<span class="tag"> {{ product.gurantee }} Years </span> 
-						<span class="tag"> {{ product.reviews }} reviews </span>
-						<span class="tag"> {{ product.country }} </span>
+						<span class="tag"> {{ product.guarantee }} Years </span>
+						<span class="tag"> {{ product.review }} reviews </span>
+						<span class="tag"> {{ product.country.name|capfirst|slice:":2" }}</span>
 					</p>
 				
 					<label class="custom-control mb-3 custom-checkbox">
@@ -151,6 +152,7 @@
 			</figcaption>
 		</figure>
 	</div> <!-- col.// -->
+        </a>
 
     {% endfor %}
 
@@ -159,13 +161,30 @@
 
 <nav class="mb-4" aria-label="Page navigation sample">
   <ul class="pagination">
-    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">4</a></li>
-    <li class="page-item"><a class="page-link" href="#">5</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    {% if products.paginator %}
+        {% if products.has_previous %}
+      <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+    {% else %}
+      <li class="page-item disabled">
+          <span class="page-link">&laquo;</span>
+      </li>
+    {% endif %}
+
+    {% for num in products.paginator.page_range %}
+        {% if products.number == num %}
+            <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+        {% endif %}
+
+            <li class="page-item"><a class="page-link" href="#">{{ num }}</a></li>
+    {% endfor %}
+    {% if products.paginator.has_next %}
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">&raquo;</span>
+        </li>
+    {% endif %}
+    {% endif %}
   </ul>
 </nav>
 

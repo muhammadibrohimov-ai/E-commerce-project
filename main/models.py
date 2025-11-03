@@ -138,6 +138,7 @@ class Product(models.Model):
     sub_category = models.ForeignKey('SubCategory', on_delete=models.CASCADE, related_name='product')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    stars = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)],blank=True, null=True)
 
     @property
     def is_new(self):

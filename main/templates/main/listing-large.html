@@ -173,26 +173,29 @@
 				<option>Cheapest</option>
 			</select>
 			<div class="btn-group">
-				<a href="page-listing-grid.html" class="btn btn-light" data-toggle="tooltip" title="List view"> 
+				<a href="{% url 'sub' sub_id  %}" class="btn btn-light" data-toggle="tooltip" title="List view">
 					<i class="fa fa-bars"></i></a>
-				<a href="page-listing-large.html" class="btn btn-light active" data-toggle="tooltip" title="Grid view"> 
+				<a href="{% url 'sub_large' sub_id  %}" class="btn btn-light active" data-toggle="tooltip" title="Grid view">
 					<i class="fa fa-th"></i></a>
 			</div>
 		</div>
 </header><!-- sect-heading -->
 
+{% for product in products %}
 
-<article class="card card-product-list">
+    <article class="card card-product-list">
 	<div class="row no-gutters">
 		<aside class="col-md-3">
-			<a href="#" class="img-wrap">
-				<span class="badge badge-danger"> NEW </span>
-				<img src="images/items/1.jpg">
+			<a href="{{ product.id }}" class="img-wrap">
+				{% if product.is_new %}
+                    <span class="badge badge-danger"> NEW </span>
+                {% endif %}
+				<img src="{{ product.main_image.url }}">
 			</a>
 		</aside> <!-- col.// -->
 		<div class="col-md-6">
 			<div class="info-main">
-				<a href="#" class="h5 title"> Hot sale unisex New Design Shirt</a>
+				<a href="#" class="h5 title">{{ product.title }}</a>
 				<div class="rating-wrap mb-2">
 					<ul class="rating-stars">
 						<li style="width:100%" class="stars-active"> 
@@ -206,30 +209,35 @@
 							<i class="fa fa-star"></i> 
 						</li>
 					</ul>
-					<div class="label-rating">9/10</div>
+					{% if product.stars %}
+                        <div class="label-rating">{{ product.stars }}/10</div>
+                    {% endif %}
 				</div> <!-- rating-wrap.// -->
 			
 				<p class="mb-3">
 					<span class="tag"> <i class="fa fa-check"></i> Verified</span> 
-					<span class="tag"> 5 Years </span> 
-					<span class="tag"> 80 reviews </span>
-					<span class="tag"> Russia </span>
+					<span class="tag"> {{ product.guarantee }} Years </span>
+					<span class="tag"> {{ product.reviews }} reviews </span>
+					<span class="tag"> {{ product.country }} </span>
 				</p>
 
-				<p> Take it as demo specs, ipsum dolor sit amet, consectetuer adipiscing elit, Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Ut wisi enim ad minim  sint occaecat cupidatat non
-				proident, sunt in culpa qui laborum.... </p>
+				<p> {{ product.desc }} </p>
 
 			</div> <!-- info-main.// -->
 		</div> <!-- col.// -->
 		<aside class="col-sm-3">
 			<div class="info-aside">
 				<div class="price-wrap">
-					<span class="h5 price">$25.00-$40.00</span> 
-					<small class="text-muted">/per item</small>
+                    {% if product.discounted_price != product.price %}
+                            <span class="price">${{ product.discounted_price }}.00 - <del style="font-size: 10px; color: red">${{ product.price }}.00</del></span>
+                            <small class="text-muted">/per item</small>
+                    {% else %}
+                            <span class="price">${{ product.price }}.00</span>
+                    {% endif %}
 				</div> <!-- price-wrap.// -->
 				<small class="text-warning">Paid shipping</small>
 				
-				<p class="text-muted mt-3">Grand textile Co</p>
+				<p class="text-muted mt-3">{{ product.company }}</p>
 				<p class="mt-3">
 					<a href="#" class="btn btn-outline-primary"> <i class="fa fa-envelope"></i> Contact supplier </a>
 					<a href="#" class="btn btn-light"><i class="fa fa-heart"></i> Save </a>
@@ -246,278 +254,34 @@
 	</div> <!-- row.// -->
 </article> <!-- card-product .// -->
 
-
-
-<article class="card card-product-list">
-	<div class="row no-gutters">
-		<aside class="col-md-3">
-			<a href="#" class="img-wrap">
-				<img src="images/items/2.jpg">
-			</a>
-		</aside> <!-- col.// -->
-		<div class="col-md-6">
-			<div class="info-main">
-				<a href="#" class="h5 title"> High Quality Winter PU Rain Jacket  </a>
-				<div class="rating-wrap mb-2">
-					<ul class="rating-stars">
-						<li style="width:80%" class="stars-active"> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> 
-						</li>
-						<li>
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> 
-						</li>
-					</ul>
-					<div class="label-rating">7/10</div>
-				</div> <!-- rating-wrap.// -->
-			
-				<p class="mb-3">
-					<span class="tag"> <i class="fa fa-check"></i> Verified</span> 
-					<span class="tag"> 2 Years </span> 
-					<span class="tag"> 30 reviews </span>
-					<span class="tag"> Japan </span>
-				</p>
-
-				<p> Take it as demo specs, ipsum dolor sit amet, consectetuer adipiscing elit, Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Ut wisi enim ad minim  sint occaecat cupidatat non
-				proident, sunt in culpa qui laborum.... </p>
-
-			</div> <!-- info-main.// -->
-		</div> <!-- col.// -->
-		<aside class="col-sm-3">
-			<div class="info-aside">
-				<div class="price-wrap">
-					<span class="h5 price">$65.00-$70.00</span> 
-					<small class="text-muted">/per item</small>
-				</div> <!-- price-wrap.// -->
-				<small class="text-success">Free shipping</small>
-				
-				<p class="text-muted mt-3">Guangzhou textile Ltd</p>
-				<p class="mt-3">
-					<a href="#" class="btn btn-outline-primary"> <i class="fa fa-envelope"></i> Contact supplier </a>
-					<a href="#" class="btn btn-light"><i class="fa fa-heart"></i> Save </a>
-				</p>
-
-				<label class="custom-control mt-3 custom-checkbox">
-					  <input type="checkbox" class="custom-control-input">
-				  	  <div class="custom-control-label">Add to compare
-				  </div>
-				</label>
-
-			</div> <!-- info-aside.// -->
-		</aside> <!-- col.// -->
-	</div> <!-- row.// -->
-</article> <!-- card-product .// -->
-
-
-
-
-<article class="card card-product-list">
-	<div class="row no-gutters">
-		<aside class="col-md-3">
-			<a href="#" class="img-wrap">
-				<img src="images/items/3.jpg">
-			</a>
-		</aside> <!-- col.// -->
-		<div class="col-md-6">
-			<div class="info-main">
-				<a href="#" class="h5 title"> Great product name goes here  </a>
-				<div class="rating-wrap mb-2">
-					<ul class="rating-stars">
-						<li style="width:20%" class="stars-active"> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> 
-						</li>
-						<li>
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> 
-						</li>
-					</ul>
-					<div class="label-rating">2/10</div>
-				</div> <!-- rating-wrap.// -->
-			
-				<p class="mb-3">
-					<span class="tag"> <i class="fa fa-check"></i> Verified</span> 
-					<span class="tag"> 4 Years </span> 
-					<span class="tag"> 60 reviews </span>
-					<span class="tag"> China </span>
-				</p>
-
-				<p> Take it as demo specs, ipsum dolor sit amet, consectetuer adipiscing elit, Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Ut wisi enim ad minim  sint occaecat cupidatat non
-				proident, sunt in culpa qui laborum.... </p>
-
-			</div> <!-- info-main.// -->
-		</div> <!-- col.// -->
-		<aside class="col-sm-3">
-			<div class="info-aside">
-				<div class="price-wrap">
-					<span class="h5 price">$325.00-$390.00</span> 
-					<small class="text-muted">/per bag</small>
-				</div> <!-- price-wrap.// -->
-				<small class="text-success">Free shipping</small>
-				
-				<p class="text-muted mt-3">Guangzhou Electronic Co</p>
-				<p class="mt-3">
-					<a href="#" class="btn btn-outline-primary"> <i class="fa fa-envelope"></i> Contact supplier </a>
-					<a href="#" class="btn btn-light"><i class="fa fa-heart"></i> Save </a>
-				</p>
-
-				<label class="custom-control mt-3 custom-checkbox">
-					  <input type="checkbox" class="custom-control-input">
-				  	  <div class="custom-control-label">Add to compare
-				  </div>
-				</label>
-
-			</div> <!-- info-aside.// -->
-		</aside> <!-- col.// -->
-	</div> <!-- row.// -->
-</article> <!-- card-product .// -->
-
-
-
-
-<article class="card card-product-list">
-	<div class="row no-gutters">
-		<aside class="col-md-3">
-			<a href="#" class="img-wrap">
-				<img src="images/items/4.jpg">
-			</a>
-		</aside> <!-- col.// -->
-		<div class="col-md-6">
-			<div class="info-main">
-				<a href="#" class="h5 title"> Best demo clothe with latest Fashion  </a>
-				<div class="rating-wrap mb-2">
-					<ul class="rating-stars">
-						<li style="width:50%" class="stars-active"> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> 
-						</li>
-						<li>
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> 
-						</li>
-					</ul>
-					<div class="label-rating">5/10</div>
-				</div> <!-- rating-wrap.// -->
-			
-				<p class="mb-3">
-					<span class="tag"> <i class="fa fa-check"></i> Verified</span> 
-					<span class="tag"> 4 Years </span> 
-					<span class="tag"> 60 reviews </span>
-					<span class="tag"> China </span>
-				</p>
-
-				<p> Take it as demo specs, ipsum dolor sit amet, consectetuer adipiscing elit, Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Ut wisi enim ad minim  sint occaecat cupidatat non
-				proident, sunt in culpa qui laborum.... </p>
-
-			</div> <!-- info-main.// -->
-		</div> <!-- col.// -->
-		<aside class="col-sm-3">
-			<div class="info-aside">
-				<div class="price-wrap">
-					<span class="h5 price">$325.00-$390.00</span> 
-					<small class="text-muted">/per bag</small>
-				</div> <!-- price-wrap.// -->
-				<small class="text-success">Free shipping</small>
-				
-				<p class="text-muted mt-3">Guangzhou Electronic Co</p>
-				<p class="mt-3">
-					<a href="#" class="btn btn-outline-primary"> <i class="fa fa-envelope"></i> Contact supplier </a>
-					<a href="#" class="btn btn-light"><i class="fa fa-heart"></i> Save </a>
-				</p>
-
-				<label class="custom-control mt-3 custom-checkbox">
-					  <input type="checkbox" class="custom-control-input">
-				  	  <div class="custom-control-label">Add to compare
-				  </div>
-				</label>
-
-			</div> <!-- info-aside.// -->
-		</aside> <!-- col.// -->
-	</div> <!-- row.// -->
-</article> <!-- card-product .// -->
-
-
-
-<article class="card card-product-list">
-	<div class="row no-gutters">
-		<aside class="col-md-3">
-			<a href="#" class="img-wrap">
-				<img src="images/items/3.jpg">
-			</a>
-		</aside> <!-- col.// -->
-		<div class="col-md-6">
-			<div class="info-main">
-				<a href="#" class="h5 title"> Great product name goes here  </a>
-				<div class="rating-wrap mb-2">
-					<ul class="rating-stars">
-						<li style="width:80%" class="stars-active"> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> 
-						</li>
-						<li>
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-							<i class="fa fa-star"></i> 
-						</li>
-					</ul>
-					<div class="label-rating">7/10</div>
-				</div> <!-- rating-wrap.// -->
-			
-				<p class="mb-3">
-					<span class="tag"> <i class="fa fa-check"></i> Verified</span> 
-					<span class="tag"> 4 Years </span> 
-					<span class="tag"> 60 reviews </span>
-					<span class="tag"> China </span>
-				</p>
-
-				<p> Take it as demo specs, ipsum dolor sit amet, consectetuer adipiscing elit, Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Ut wisi enim ad minim  sint occaecat cupidatat non
-				proident, sunt in culpa qui laborum.... </p>
-
-			</div> <!-- info-main.// -->
-		</div> <!-- col.// -->
-		<aside class="col-sm-3">
-			<div class="info-aside">
-				<div class="price-wrap">
-					<span class="h5 price">$325.00-$390.00</span> 
-					<small class="text-muted">/per bag</small>
-				</div> <!-- price-wrap.// -->
-				<small class="text-success">Free shipping</small>
-				
-				<p class="text-muted mt-3">Guangzhou Electronic Co</p>
-				<p class="mt-3">
-					<a href="#" class="btn btn-outline-primary"> <i class="fa fa-envelope"></i> Contact supplier </a>
-					<a href="#" class="btn btn-light"><i class="fa fa-heart"></i> Save </a>
-				</p>
-
-				<label class="custom-control mt-3 custom-checkbox">
-					  <input type="checkbox" class="custom-control-input">
-				  	  <div class="custom-control-label">Add to compare
-				  </div>
-				</label>
-
-			</div> <!-- info-aside.// -->
-		</aside> <!-- col.// -->
-	</div> <!-- row.// -->
-</article> <!-- card-product .// -->
-
+{% endfor %}
 
 <nav class="mb-4" aria-label="Page navigation sample">
   <ul class="pagination">
-    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">4</a></li>
-    <li class="page-item"><a class="page-link" href="#">5</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    {% if products.paginator %}
+        {% if products.has_previous %}
+      <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+    {% else %}
+      <li class="page-item disabled">
+          <span class="page-link">&laquo;</span>
+      </li>
+    {% endif %}
+
+    {% for num in products.paginator.page_range %}
+        {% if products.number == num %}
+            <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+        {% endif %}
+
+            <li class="page-item"><a class="page-link" href="#">{{ num }}</a></li>
+    {% endfor %}
+    {% if products.paginator.has_next %}
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    {% else %}
+        <li class="page-item disabled">
+            <span class="page-link">&raquo;</span>
+        </li>
+    {% endif %}
+    {% endif %}
   </ul>
 </nav>
 
