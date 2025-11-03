@@ -14,23 +14,38 @@ class HomePageView(ListView):
     model = Product
     context_object_name = 'products'
 
+
+
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['categories'] = Category.objects.all()
         data['countries'] = Country.objects.all()
-        # data['offers'] = Product.objects.filter(discount_gt=20)[:5]
-        data['clothes'] = Product.objects.filter(sub_category__category__name='clothes')[:8]
-        data['electronics'] = Product.objects.filter(sub_category__category__name='electronics')[:8]
-        data['electronic'] = Category.objects.get(name__icontains='electronics')
-        data['clothe'] = Category.objects.get(name__icontains='clothes')
-        data['recomended'] = Product.objects.filter(recomended=True)[:12]
+        data['recomended'] = Product.objects.filter(recomended=True,)
         data['services'] = Service.objects.filter()[:4]
+        data['discount'] = Product.objects.filter(discount__gte=20)
 
         return data
-    
-    
-class ListingGridPageView(TemplateView):
+
+
+class CategoryPageView(ListView):
+    model = Category
+    template_name = 'main/category.html'
+    context_object_name = 'categories'
+
+
+class ListingGridPageView(ListView):
     template_name = 'main/listing-grid.html'
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        sub_id = self.kwargs.get('pk')
+        return Product.objects.filter(sub_category__id=sub_id)
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['sub_id'] = self.kwargs.get('pk')
+        return data
+
     
     
 class ListingLargePageView(TemplateView):

@@ -1,4 +1,4 @@
-import unfold.admin
+
 from django.contrib import admin
 from unfold.admin import ModelAdmin, TabularInline, InlineModelAdmin
 from import_export.admin import ImportExportModelAdmin
@@ -8,6 +8,7 @@ from .models import (
 )
 
 # Register your models here.
+
 
 
 class ProductImageModelAdmin(TabularInline):
@@ -32,9 +33,9 @@ class ProductModelAdmin(ModelAdmin, ImportExportModelAdmin):
 
 @admin.register(Category)
 class CategoryModelAdmin(ModelAdmin, ImportExportModelAdmin):
-    list_display = ['name', 'title', 'is_active']
+    list_display = ['name', 'title', 'color']
     search_fields = ['name', 'title', 'desc']
-    list_filter = ['is_active',]
+    list_filter = ['color']
     inlines = [SubCategoryModelAdmin,]
 
 

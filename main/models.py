@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 # Create your models here.
 
@@ -59,6 +61,8 @@ class Color(models.TextChoices):
         GOLDENROD = 'goldenrod', 'GoldenRod'
         GRAY = 'gray', 'Gray'
         GREEN = 'green', 'Green'
+
+
         
 
 class Category(models.Model):
@@ -66,23 +70,33 @@ class Category(models.Model):
     title = models.CharField(max_length=200)
     desc = models.TextField()
     image = models.FileField(upload_to='images/sup_category')
-    is_active = models.BooleanField(default=True)
+    color = models.CharField(max_length=50, choices=Color.choices, default=Color.GREEN)
+
+    @property
+    def is_active(self):
+        return self.sub_category.exists()
     
     def __str__(self):
         return self.name
-    
+
+
     class Meta:
         db_table = 'super_category'
         verbose_name = 'Category'
         verbose_name_plural = 'Categroies'
+
         
         
 class SubCategory(models.Model):
     name = models.CharField(max_length=50)
     image = models.FileField(upload_to='images/sub_category')
-    color = models.CharField(max_length=50, choices=Color.choices, default=Color.GREEN)
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name='sub_category')
-    
+
+    @property
+    def is_active(self):
+        return self.product.exists()
+
+
     def __str__(self):
         return self.name
     
@@ -108,7 +122,7 @@ class SizeChoices(models.TextChoices):
 
 class Product(models.Model):
     title = models.CharField(max_length=200)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.PositiveIntegerField()
     desc = models.TextField()
     main_image = models.FileField(upload_to='images/product')
     color = models.CharField(max_length=50, choices=Color.choices, default=Color.GOLD)
@@ -124,9 +138,25 @@ class Product(models.Model):
     sub_category = models.ForeignKey('SubCategory', on_delete=models.CASCADE, related_name='product')
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    
+
+    @property
+    def is_new(self):
+        return self.created_at >= timezone.now() - timedelta(days=3)
+
+    @property
+    def is_active(self):
+        return self.quantity > 0
+
+
     def __str__(self):
         return self.title
+
+    @property
+    def discounted_price(self):
+        return int(self.price * (1 - self.discount / 100))
+
+
+
     
     
 class ProductImage(models.Model):
