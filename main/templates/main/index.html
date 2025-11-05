@@ -20,7 +20,17 @@
 
                 {% for category in categories|slice:":7" %}
 				    {% if category.is_active %}
-                        <li><a href="#">{{ category.name }}</a></li>
+                        <li class="has-submenu"><a href="#">{{ category.name }}</a>
+					<ul class="submenu">
+                        {% if category.is_active %}
+                            {% for sub in category.sub_category.all %}
+                                {% if sub.is_active %} 
+                                    <li><a href="{% url 'sub' sub.id %}">{{ sub.name }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+					</ul>
+				</li>
                     {% endif %}
                     {% empty %}
                     <p>There is no active categories</p>

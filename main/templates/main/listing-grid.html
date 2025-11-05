@@ -96,10 +96,17 @@
 				<option>Cheapest</option>
 			</select>
 			<div class="btn-group">
-				<a href="{% url 'sub' sub_id  %}" class="btn btn-light active" data-toggle="tooltip" title="List view">
-					<i class="fa fa-bars"></i></a>
-				<a href="{% url 'sub_large' sub_id  %}" class="btn btn-light" data-toggle="tooltip" title="Grid view">
-					<i class="fa fa-th"></i></a>
+				{% if sub_id %}
+                    <a href="{% url 'sub' sub_id  %}" class="btn btn-light active" data-toggle="tooltip" title="List view">
+                        <i class="fa fa-bars"></i></a>
+                    <a href="{% url 'sub_large' sub_id  %}" class="btn btn-light" data-toggle="tooltip" title="Grid view">
+					    <i class="fa fa-th"></i></a>
+                {% else %}
+                    <a href="{% url 'sub_o'   %}" class="btn btn-light active" data-toggle="tooltip" title="List view">
+                        <i class="fa fa-bars"></i></a>
+                    <a href="{% url 'sub_l'  %}" class="btn btn-light" data-toggle="tooltip" title="Grid view">
+                        <i class="fa fa-th"></i></a>
+                {% endif %}
 			</div>
 		</div>
 </header><!-- sect-heading -->

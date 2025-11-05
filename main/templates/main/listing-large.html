@@ -36,13 +36,11 @@
 		<div class="filter-content collapse show" id="collapse_1">
 			<div class="inner">
 				<ul class="list-menu">
-					<li><a href="#">Shorts  </a></li>
-					<li><a href="#">Trousers </a></li>
-					<li><a href="#">Sweaters  </a></li>
-					<li><a href="#">Clothes  </a></li>
-					<li><a href="#">Home items </a></li>
-					<li><a href="#">Jackats</a></li>
-					<li><a href="#">Somethings </a></li>
+                    {% for sub in subs %}
+                        {% if sub.is_active %}
+					        <li><a href="#"> {{ sub.name }} </a></li>
+                        {% endif %}
+                    {% endfor %}
 				</ul>
 			</div> <!-- inner.// -->
 		</div>
@@ -173,10 +171,17 @@
 				<option>Cheapest</option>
 			</select>
 			<div class="btn-group">
-				<a href="{% url 'sub' sub_id  %}" class="btn btn-light" data-toggle="tooltip" title="List view">
-					<i class="fa fa-bars"></i></a>
-				<a href="{% url 'sub_large' sub_id  %}" class="btn btn-light active" data-toggle="tooltip" title="Grid view">
-					<i class="fa fa-th"></i></a>
+				{% if sub_id %}
+                    <a href="{% url 'sub' sub_id  %}" class="btn btn-light active" data-toggle="tooltip" title="List view">
+                        <i class="fa fa-bars"></i></a>
+                    <a href="{% url 'sub_large' sub_id  %}" class="btn btn-light" data-toggle="tooltip" title="Grid view">
+					    <i class="fa fa-th"></i></a>
+                {% else %}
+                    <a href="{% url 'sub_o'   %}" class="btn btn-light active" data-toggle="tooltip" title="List view">
+                        <i class="fa fa-bars"></i></a>
+                    <a href="{% url 'sub_l'  %}" class="btn btn-light" data-toggle="tooltip" title="Grid view">
+                        <i class="fa fa-th"></i></a>
+                {% endif %}
 			</div>
 		</div>
 </header><!-- sect-heading -->
@@ -186,7 +191,7 @@
         <article class="card card-product-list">
 	<div class="row no-gutters">
 		<aside class="col-md-3">
-			<a href="{{ product.id }}" class="img-wrap">
+			<a href="{% url 'detail' product.id %}" class="img-wrap">
 				{% if product.is_new %}
                     <span class="badge badge-danger"> NEW </span>
                 {% endif %}

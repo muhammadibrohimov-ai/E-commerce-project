@@ -3,7 +3,7 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, DetailView
 from .models import (
     Product,Category, SubCategory,
-    Country, Service, ProductImage
+    Country, Service, ProductImage, SizeChoices, DeliveryTime, Country
 )
 
 # Create your views here.
@@ -61,6 +61,8 @@ class ListingLargePageView(ListView):
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['sub_id'] = self.kwargs.get('pk')
+        data['subs'] = SubCategory.objects.all()
+
         return data
 
 class DetailProductView(DetailView):
